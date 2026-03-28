@@ -13,9 +13,29 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "SaaS MVP - Ship Your SaaS Faster",
+  title: {
+    default: "IdeaFlow - Startup Ideas Backed by Real Research",
+    template: "%s | IdeaFlow",
+  },
   description:
-    "Everything you need to launch, grow, and scale your subscription business. Built with Next.js, Stripe, and PostgreSQL.",
+    "Deeply researched startup opportunities published weekly. Market analysis, competitive landscape, and execution playbooks for builders.",
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    siteName: "IdeaFlow",
+    title: "IdeaFlow - Startup Ideas Backed by Real Research",
+    description:
+      "Deeply researched startup opportunities published weekly. Market analysis, competitive landscape, and execution playbooks for builders.",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "IdeaFlow - Startup Ideas Backed by Real Research",
+    description:
+      "Deeply researched startup opportunities published weekly.",
+  },
+  metadataBase: new URL(
+    process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000"
+  ),
 };
 
 export default function RootLayout({

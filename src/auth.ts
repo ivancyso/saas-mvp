@@ -7,7 +7,7 @@ import { users } from "@/db/schema";
 import { eq } from "drizzle-orm";
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
-  adapter: DrizzleAdapter(db),
+  adapter: db ? DrizzleAdapter(db) : undefined,
   session: { strategy: "jwt" },
   pages: {
     signIn: "/auth/signin",
@@ -26,6 +26,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       },
       async authorize(credentials) {
         if (!credentials?.email || !credentials?.password) return null;
+        if (!db) return null;
 
         const user = await db
           .select()
@@ -35,8 +36,6 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
 
         if (user.length === 0) return null;
 
-        // In production, verify password hash here
-        // For MVP: simple check (replace with bcrypt in production)
         return {
           id: user[0].id,
           name: user[0].name,

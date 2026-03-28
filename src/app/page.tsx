@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Check } from "lucide-react";
 import { PLANS } from "@/lib/plans";
+import { NewsletterForm } from "@/components/newsletter-form";
 
 export default function LandingPage() {
   return (
@@ -8,8 +9,22 @@ export default function LandingPage() {
       {/* Nav */}
       <nav className="border-b border-gray-100">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
-          <div className="text-xl font-bold text-gray-900">SaaS MVP</div>
-          <div className="flex items-center gap-4">
+          <Link href="/" className="text-xl font-bold text-gray-900">
+            IdeaFlow
+          </Link>
+          <div className="flex items-center gap-6">
+            <Link
+              href="/ideas"
+              className="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors"
+            >
+              Ideas
+            </Link>
+            <Link
+              href="#pricing"
+              className="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors"
+            >
+              Pricing
+            </Link>
             <Link
               href="/auth/signin"
               className="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors"
@@ -18,9 +33,9 @@ export default function LandingPage() {
             </Link>
             <Link
               href="/auth/signup"
-              className="rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700 transition-colors"
+              className="rounded-lg bg-gray-900 px-4 py-2 text-sm font-medium text-white hover:bg-gray-800 transition-colors"
             >
-              Get started free
+              Subscribe
             </Link>
           </div>
         </div>
@@ -29,23 +44,24 @@ export default function LandingPage() {
       {/* Hero */}
       <section className="mx-auto max-w-4xl px-6 py-24 text-center">
         <div className="inline-block rounded-full bg-blue-50 px-4 py-1.5 text-sm font-medium text-blue-700 mb-6">
-          14-day free trial &middot; No credit card required
+          New ideas published weekly
         </div>
         <h1 className="text-5xl font-bold tracking-tight text-gray-900 sm:text-6xl">
-          Ship your SaaS
+          Startup ideas backed
           <br />
-          <span className="text-blue-600">faster than ever</span>
+          <span className="text-blue-600">by real research</span>
         </h1>
         <p className="mx-auto mt-6 max-w-2xl text-lg text-gray-600">
-          Everything you need to launch, grow, and scale your subscription
-          business. Built with the modern stack, deployed in minutes.
+          We publish deeply researched startup opportunities every week.
+          Market sizing, competitive analysis, and step-by-step execution
+          playbooks — so you can build with confidence.
         </p>
         <div className="mt-10 flex items-center justify-center gap-4">
           <Link
-            href="/auth/signup"
-            className="rounded-lg bg-blue-600 px-6 py-3 text-base font-medium text-white hover:bg-blue-700 transition-colors"
+            href="/ideas"
+            className="rounded-lg bg-gray-900 px-6 py-3 text-base font-medium text-white hover:bg-gray-800 transition-colors"
           >
-            Start free trial
+            Browse ideas
           </Link>
           <Link
             href="#pricing"
@@ -56,37 +72,40 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* Features */}
+      {/* Sample article previews */}
       <section className="border-t border-gray-100 bg-gray-50 py-24">
         <div className="mx-auto max-w-6xl px-6">
           <h2 className="text-center text-3xl font-bold text-gray-900">
-            Everything you need to succeed
+            What you get with IdeaFlow
           </h2>
+          <p className="mx-auto mt-4 max-w-xl text-center text-gray-600">
+            Every idea comes with the research you need to evaluate and execute.
+          </p>
           <div className="mt-12 grid gap-8 md:grid-cols-3">
             {[
               {
-                title: "Authentication",
-                desc: "Email/password and Google OAuth out of the box. Secure sessions with JWT.",
+                title: "Market Analysis",
+                desc: "TAM/SAM/SOM breakdown, growth trends, and timing analysis for every opportunity.",
               },
               {
-                title: "Subscription Billing",
-                desc: "Stripe-powered billing with free trials, upgrades, and customer portal.",
+                title: "Competitive Landscape",
+                desc: "Who else is building in this space, what they're doing right, and where the gaps are.",
               },
               {
-                title: "Dashboard",
-                desc: "Beautiful dashboard shell with sidebar navigation and responsive design.",
+                title: "Execution Playbook",
+                desc: "Step-by-step guide to validate, build, and launch. From MVP to first paying customer.",
               },
               {
-                title: "Database",
-                desc: "PostgreSQL with Drizzle ORM. Type-safe queries and automatic migrations.",
+                title: "Revenue Models",
+                desc: "Proven monetization strategies with pricing benchmarks from comparable businesses.",
               },
               {
-                title: "SEO Ready",
-                desc: "Server-side rendering, metadata API, and optimized performance scores.",
+                title: "Risk Assessment",
+                desc: "Known challenges, regulatory considerations, and mitigation strategies.",
               },
               {
-                title: "Deploy Anywhere",
-                desc: "Optimized for Vercel with zero-config. Works with any Node.js host.",
+                title: "Weekly Updates",
+                desc: "Fresh ideas delivered to your inbox every week. Never miss an opportunity.",
               },
             ].map((feature) => (
               <div
@@ -103,16 +122,31 @@ export default function LandingPage() {
         </div>
       </section>
 
+      {/* Social proof placeholder */}
+      <section className="py-16 border-t border-gray-100">
+        <div className="mx-auto max-w-4xl px-6 text-center">
+          <p className="text-sm font-medium uppercase tracking-wider text-gray-400">
+            Trusted by founders and investors
+          </p>
+          <div className="mt-8 flex items-center justify-center gap-12 text-gray-300">
+            <span className="text-lg font-semibold">YC Founders</span>
+            <span className="text-lg font-semibold">Angel Investors</span>
+            <span className="text-lg font-semibold">Indie Hackers</span>
+            <span className="text-lg font-semibold">VCs</span>
+          </div>
+        </div>
+      </section>
+
       {/* Pricing */}
-      <section id="pricing" className="py-24">
-        <div className="mx-auto max-w-6xl px-6">
+      <section id="pricing" className="py-24 border-t border-gray-100 bg-gray-50">
+        <div className="mx-auto max-w-4xl px-6">
           <h2 className="text-center text-3xl font-bold text-gray-900">
-            Simple, transparent pricing
+            Simple pricing
           </h2>
           <p className="mx-auto mt-4 max-w-xl text-center text-gray-600">
-            Start free and scale as you grow. All plans include a 14-day trial.
+            Start free. Upgrade when you're ready for full access.
           </p>
-          <div className="mt-12 grid gap-8 md:grid-cols-3">
+          <div className="mt-12 grid gap-8 md:grid-cols-2 max-w-2xl mx-auto">
             {(
               Object.entries(PLANS) as [
                 string,
@@ -121,15 +155,15 @@ export default function LandingPage() {
             ).map(([key, plan]) => (
               <div
                 key={key}
-                className={`rounded-xl border p-8 ${
+                className={`rounded-xl border p-8 bg-white ${
                   key === "pro"
-                    ? "border-blue-600 ring-2 ring-blue-600 relative"
+                    ? "border-gray-900 ring-2 ring-gray-900 relative"
                     : "border-gray-200"
                 }`}
               >
                 {key === "pro" && (
-                  <div className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-blue-600 px-3 py-1 text-xs font-medium text-white">
-                    Most popular
+                  <div className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-gray-900 px-3 py-1 text-xs font-medium text-white">
+                    Full access
                   </div>
                 )}
                 <h3 className="text-lg font-semibold text-gray-900">
@@ -152,7 +186,7 @@ export default function LandingPage() {
                       key={feature}
                       className="flex items-start gap-2 text-sm text-gray-600"
                     >
-                      <Check className="mt-0.5 h-4 w-4 shrink-0 text-blue-600" />
+                      <Check className="mt-0.5 h-4 w-4 shrink-0 text-green-600" />
                       {feature}
                     </li>
                   ))}
@@ -161,11 +195,11 @@ export default function LandingPage() {
                   href="/auth/signup"
                   className={`mt-8 block w-full rounded-lg px-4 py-2.5 text-center text-sm font-medium transition-colors ${
                     key === "pro"
-                      ? "bg-blue-600 text-white hover:bg-blue-700"
+                      ? "bg-gray-900 text-white hover:bg-gray-800"
                       : "border border-gray-300 text-gray-700 hover:bg-gray-50"
                   }`}
                 >
-                  {plan.price === 0 ? "Get started free" : "Start free trial"}
+                  {plan.price === 0 ? "Get started free" : "Start 14-day free trial"}
                 </Link>
               </div>
             ))}
@@ -173,10 +207,34 @@ export default function LandingPage() {
         </div>
       </section>
 
+      {/* Newsletter CTA */}
+      <section className="py-24 border-t border-gray-100">
+        <div className="mx-auto max-w-xl px-6 text-center">
+          <h2 className="text-3xl font-bold text-gray-900">
+            Get ideas in your inbox
+          </h2>
+          <p className="mt-4 text-gray-600">
+            Join our free weekly newsletter. New startup ideas with market analysis
+            delivered every Tuesday.
+          </p>
+          <div className="mt-8">
+            <NewsletterForm />
+          </div>
+        </div>
+      </section>
+
       {/* Footer */}
       <footer className="border-t border-gray-100 py-8">
-        <div className="mx-auto max-w-6xl px-6 text-center text-sm text-gray-500">
-          &copy; {new Date().getFullYear()} SaaS MVP. All rights reserved.
+        <div className="mx-auto max-w-6xl px-6 flex items-center justify-between text-sm text-gray-500">
+          <span>&copy; {new Date().getFullYear()} IdeaFlow. All rights reserved.</span>
+          <div className="flex gap-6">
+            <Link href="/ideas" className="hover:text-gray-700 transition-colors">
+              Ideas
+            </Link>
+            <Link href="#pricing" className="hover:text-gray-700 transition-colors">
+              Pricing
+            </Link>
+          </div>
         </div>
       </footer>
     </div>

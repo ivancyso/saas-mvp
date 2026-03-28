@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { getArticleBySlug } from "@/lib/articles";
 import { MDXRemote } from "next-mdx-remote/rsc";
+import remarkGfm from "remark-gfm";
 import { Lock } from "lucide-react";
 
 interface PageProps {
@@ -92,13 +93,7 @@ export default async function ArticlePage({ params }: PageProps) {
               Ideas
             </Link>
             <Link
-              href="/auth/signin"
-              className="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors"
-            >
-              Sign in
-            </Link>
-            <Link
-              href="/auth/signup"
+              href="/#pricing"
               className="rounded-lg bg-gray-900 px-4 py-2 text-sm font-medium text-white hover:bg-gray-800 transition-colors"
             >
               Subscribe
@@ -172,9 +167,10 @@ export default async function ArticlePage({ params }: PageProps) {
             className="article-content mt-10 prose prose-lg prose-gray max-w-none
               prose-headings:font-semibold prose-headings:tracking-tight
               prose-a:text-blue-600 prose-a:no-underline hover:prose-a:underline
-              prose-img:rounded-xl"
+              prose-img:rounded-xl
+              prose-table:border-collapse prose-th:border prose-th:border-gray-300 prose-th:bg-gray-50 prose-th:px-4 prose-th:py-2 prose-td:border prose-td:border-gray-200 prose-td:px-4 prose-td:py-2"
           >
-            <MDXRemote source={article.content} />
+            <MDXRemote source={article.content} options={{ mdxOptions: { remarkPlugins: [remarkGfm] } }} />
           </div>
         ) : (
           <div className="mt-10">
@@ -182,7 +178,7 @@ export default async function ArticlePage({ params }: PageProps) {
               className="prose prose-lg prose-gray max-w-none relative overflow-hidden"
               style={{ maxHeight: "400px" }}
             >
-              <MDXRemote source={article.content.slice(0, 600)} />
+              <MDXRemote source={article.content.slice(0, 600)} options={{ mdxOptions: { remarkPlugins: [remarkGfm] } }} />
             </div>
             <div className="relative -mt-24 pt-24 bg-gradient-to-t from-white via-white/95 to-transparent">
               <div className="rounded-xl border-2 border-gray-200 bg-gray-50 p-8 text-center">

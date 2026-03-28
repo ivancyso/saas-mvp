@@ -1,13 +1,8 @@
 import NextAuth from "next-auth";
-import { DrizzleAdapter } from "@auth/drizzle-adapter";
 import Google from "next-auth/providers/google";
 import Credentials from "next-auth/providers/credentials";
-import { db } from "@/db";
-import { users } from "@/db/schema";
-import { eq } from "drizzle-orm";
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
-  adapter: db ? DrizzleAdapter(db) : undefined,
   session: { strategy: "jwt" },
   pages: {
     signIn: "/auth/signin",
@@ -15,8 +10,8 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   },
   providers: [
     Google({
-      clientId: process.env.AUTH_GOOGLE_ID,
-      clientSecret: process.env.AUTH_GOOGLE_SECRET,
+      clientId: process.env.AUTH_GOOGLE_ID ?? "",
+      clientSecret: process.env.AUTH_GOOGLE_SECRET ?? "",
     }),
     Credentials({
       name: "credentials",
@@ -24,24 +19,9 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         email: { label: "Email", type: "email" },
         password: { label: "Password", type: "password" },
       },
-      async authorize(credentials) {
-        if (!credentials?.email || !credentials?.password) return null;
-        if (!db) return null;
-
-        const user = await db
-          .select()
-          .from(users)
-          .where(eq(users.email, credentials.email as string))
-          .limit(1);
-
-        if (user.length === 0) return null;
-
-        return {
-          id: user[0].id,
-          name: user[0].name,
-          email: user[0].email,
-          image: user[0].image,
-        };
+      async authorize() {
+        // Auth is not set up for the MDX-only version
+        return null;
       },
     }),
   ],

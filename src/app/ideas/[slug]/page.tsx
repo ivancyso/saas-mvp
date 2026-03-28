@@ -2,11 +2,8 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { getArticleBySlug } from "@/lib/articles";
-import { auth } from "@/auth";
-import { getUserSubscription, isProSubscriber } from "@/lib/subscription";
+import { MDXRemote } from "next-mdx-remote/rsc";
 import { Lock } from "lucide-react";
-
-export const dynamic = "force-dynamic";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -48,13 +45,7 @@ export default async function ArticlePage({ params }: PageProps) {
     notFound();
   }
 
-  const session = await auth();
-  let hasAccess = !article.isPremium;
-
-  if (!hasAccess && session?.user?.id) {
-    const sub = await getUserSubscription(session.user.id);
-    hasAccess = isProSubscriber(sub);
-  }
+  const hasAccess = !article.isPremium;
 
   const articleJsonLd = {
     "@context": "https://schema.org",
@@ -100,29 +91,18 @@ export default async function ArticlePage({ params }: PageProps) {
             >
               Ideas
             </Link>
-            {session ? (
-              <Link
-                href="/dashboard"
-                className="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors"
-              >
-                Dashboard
-              </Link>
-            ) : (
-              <>
-                <Link
-                  href="/auth/signin"
-                  className="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors"
-                >
-                  Sign in
-                </Link>
-                <Link
-                  href="/auth/signup"
-                  className="rounded-lg bg-gray-900 px-4 py-2 text-sm font-medium text-white hover:bg-gray-800 transition-colors"
-                >
-                  Subscribe
-                </Link>
-              </>
-            )}
+            <Link
+              href="/auth/signin"
+              className="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors"
+            >
+              Sign in
+            </Link>
+            <Link
+              href="/auth/signup"
+              className="rounded-lg bg-gray-900 px-4 py-2 text-sm font-medium text-white hover:bg-gray-800 transition-colors"
+            >
+              Subscribe
+            </Link>
           </div>
         </div>
       </nav>
@@ -193,16 +173,17 @@ export default async function ArticlePage({ params }: PageProps) {
               prose-headings:font-semibold prose-headings:tracking-tight
               prose-a:text-blue-600 prose-a:no-underline hover:prose-a:underline
               prose-img:rounded-xl"
-            dangerouslySetInnerHTML={{ __html: article.content }}
-          />
+          >
+            <MDXRemote source={article.content} />
+          </div>
         ) : (
           <div className="mt-10">
             <div
-              className="prose prose-lg prose-gray max-w-none line-clamp-[8] relative"
-              dangerouslySetInnerHTML={{
-                __html: article.content.slice(0, 600) + "...",
-              }}
-            />
+              className="prose prose-lg prose-gray max-w-none relative overflow-hidden"
+              style={{ maxHeight: "400px" }}
+            >
+              <MDXRemote source={article.content.slice(0, 600)} />
+            </div>
             <div className="relative -mt-24 pt-24 bg-gradient-to-t from-white via-white/95 to-transparent">
               <div className="rounded-xl border-2 border-gray-200 bg-gray-50 p-8 text-center">
                 <Lock className="mx-auto h-8 w-8 text-gray-400" />
@@ -210,14 +191,14 @@ export default async function ArticlePage({ params }: PageProps) {
                   This is a Pro article
                 </h3>
                 <p className="mt-2 text-gray-600">
-                  Get full access to this research and all startup ideas for $29/month.
+                  Subscribe to read the full research. Get access to all startup ideas for $29/month.
                 </p>
                 <div className="mt-6 flex items-center justify-center gap-3">
                   <Link
                     href="/auth/signup"
                     className="rounded-lg bg-gray-900 px-6 py-2.5 text-sm font-medium text-white hover:bg-gray-800 transition-colors"
                   >
-                    Start 14-day free trial
+                    Subscribe to read full article
                   </Link>
                   <Link
                     href="/auth/signin"

@@ -4,8 +4,6 @@ import type { Metadata } from "next";
 import { getArticlesByCategory, getAllCategories } from "@/lib/articles";
 import { Lock } from "lucide-react";
 
-export const dynamic = "force-dynamic";
-
 interface PageProps {
   params: Promise<{ slug: string }>;
 }

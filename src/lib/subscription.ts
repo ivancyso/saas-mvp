@@ -1,15 +1,6 @@
-import { db } from "@/db";
-import { subscriptions } from "@/db/schema";
-import { eq } from "drizzle-orm";
-
-export async function getUserSubscription(userId: string) {
-  const rows = await db
-    .select()
-    .from(subscriptions)
-    .where(eq(subscriptions.userId, userId))
-    .limit(1);
-
-  return rows[0] ?? null;
+export async function getUserSubscription(_userId: string) {
+  // Subscriptions are not available in the MDX-only version
+  return null;
 }
 
 export function isProSubscriber(

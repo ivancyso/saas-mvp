@@ -1,6 +1,4 @@
 import { NextResponse } from "next/server";
-import { db } from "@/db";
-import { emailSubscribers } from "@/db/schema";
 
 export async function POST(req: Request) {
   const body = await req.json();
@@ -13,17 +11,7 @@ export async function POST(req: Request) {
     );
   }
 
-  try {
-    await db
-      .insert(emailSubscribers)
-      .values({ email })
-      .onConflictDoNothing({ target: emailSubscribers.email });
-
-    return NextResponse.json({ success: true });
-  } catch {
-    return NextResponse.json(
-      { error: "Failed to subscribe. Please try again." },
-      { status: 500 }
-    );
-  }
+  // TODO: integrate with email service (Resend, ConvertKit, etc.)
+  // For now, accept the subscription without persisting
+  return NextResponse.json({ success: true });
 }

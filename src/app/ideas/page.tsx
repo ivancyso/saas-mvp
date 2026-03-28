@@ -3,8 +3,6 @@ import type { Metadata } from "next";
 import { getPublishedArticles, getAllCategories } from "@/lib/articles";
 import { Lock } from "lucide-react";
 
-export const dynamic = "force-dynamic";
-
 export const metadata: Metadata = {
   title: "Startup Ideas | IdeaFlow",
   description:

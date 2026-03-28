@@ -1,0 +1,138 @@
+---
+title: "DataLayer: The Universal API for Business Intelligence"
+slug: datalayer
+excerpt: "A middleware platform that connects every business data source to every BI tool — eliminating the integration tax that costs companies millions in engineering time."
+category: Data Infrastructure
+tier: pro
+publishedAt: "2026-03-08"
+author: "IdeaFlow Research"
+---
+
+## The Problem: The Integration Tax Is Killing Data Teams
+
+Every data team in the world faces the same nightmare: connecting data sources to analytics tools. A typical mid-market company uses 15–30 SaaS applications, 2–3 databases, and 2–4 BI or analytics tools. Getting data from point A to point B requires building and maintaining custom ETL pipelines, and every new source or destination multiplies the complexity.
+
+The result is the **integration tax** — the engineering hours, infrastructure costs, and opportunity costs of building plumbing instead of insights. Data engineers spend **40–60% of their time** on pipeline maintenance rather than analysis. For a company with a five-person data team, that translates to $400K–$600K annually in wasted salary alone.
+
+**DataLayer** is a universal API that sits between data sources and BI tools, providing a standardized interface that eliminates the N-to-N integration problem. Connect once, query anywhere.
+
+## Market Analysis
+
+### TAM / SAM / SOM
+
+- **TAM**: $28B — global data integration and middleware market
+- **SAM**: $7.5B — SaaS-based data integration for mid-market and enterprise companies
+- **SOM**: $750M — companies using 2+ BI tools with 10+ data sources in the US and Europe
+
+### Why Now?
+
+1. **SaaS sprawl acceleration**: The average company's SaaS stack grew 40% between 2022 and 2025. Every new tool is another data silo.
+2. **Multi-BI reality**: Companies increasingly use Looker for embedded analytics, Tableau for executive dashboards, and dbt for transformation. Each needs its own connection layer.
+3. **Semantic layer maturity**: The concept of a universal metrics layer (pioneered by dbt Metrics, Cube.dev, and AtScale) has educated the market. DataLayer extends this to the full integration stack.
+4. **Real-time expectations**: Batch ETL is no longer sufficient. Business users expect dashboards that update in minutes, not hours. Traditional pipelines cannot keep up.
+
+## Competitive Landscape
+
+| Competitor | Weakness |
+|---|---|
+| **Fivetran** | Source-to-warehouse only. No semantic layer. No reverse ETL. |
+| **Airbyte** | Open-source EL tool. Requires significant engineering to operationalize. |
+| **Cube.dev** | Semantic layer only. No data movement. |
+| **dbt** | Transformation layer. Assumes data is already in the warehouse. |
+| **Census / Hightouch** | Reverse ETL only. One direction. |
+| **Segment** | Event data only. No support for databases or SaaS application data. |
+
+Each tool solves one piece of the puzzle. DataLayer is the **unified middleware** that handles extraction, semantic modeling, caching, and delivery to any destination — BI tools, operational systems, or APIs.
+
+## The Product
+
+### Core Features
+
+**1. Universal Connectors**
+Pre-built connectors to 200+ data sources (SaaS apps, databases, data warehouses, APIs) and 50+ destinations (BI tools, operational systems, reverse ETL targets). A single connection model that works for all.
+
+**2. Semantic Layer**
+Define metrics, dimensions, and relationships once. Every downstream tool sees the same definitions. No more "revenue means different things in different dashboards." Version-controlled, with lineage tracking.
+
+**3. Intelligent Caching**
+Query results are cached at the semantic layer with configurable freshness. Most BI queries hit the cache instead of the source, reducing warehouse costs by 40–60% and improving dashboard load times by 10x.
+
+**4. Query Federation**
+Join data across sources without moving it first. Query your Salesforce CRM data alongside your PostgreSQL product data and your Stripe billing data — in a single SQL statement.
+
+**5. Access Control**
+Row-level and column-level security defined once in the semantic layer, enforced across every connected BI tool. Compliance teams configure access in one place rather than in each tool.
+
+**6. DataLayer API**
+Every metric and dataset is accessible via a REST or GraphQL API. Build internal tools, power customer-facing analytics, or feed ML models — all from the same semantic definitions.
+
+### Technical Architecture
+
+- **Connector Framework**: Rust-based extraction engine for high-throughput, low-latency data movement. Plugin architecture for custom connectors.
+- **Semantic Engine**: Apache Arrow-based columnar processing. SQL parser that rewrites queries against the semantic model into optimized source queries.
+- **Cache Layer**: Distributed cache (Redis + Apache DataFusion) with materialization policies per metric.
+- **Federation Engine**: Query planner that pushes predicates to sources and performs cross-source joins locally.
+- **API Gateway**: GraphQL and REST endpoints with authentication, rate limiting, and usage tracking.
+- **Infrastructure**: Kubernetes-native. Available as SaaS or self-hosted (VPC deployment for enterprise).
+
+## Revenue Model
+
+### Pricing Tiers
+
+| Tier | Price | Target |
+|---|---|---|
+| **Team** | $999/mo | Small data teams (2–5 people), up to 20 connectors, 10M rows/month |
+| **Business** | $3,999/mo | Mid-market, unlimited connectors, 100M rows/month, query federation |
+| **Enterprise** | $12,000+/mo | VPC deployment, SSO/SCIM, custom SLAs, dedicated support |
+
+### Consumption Add-On
+$0.10 per 1,000 federated queries beyond the tier limit. Aligns cost with value delivered.
+
+### Unit Economics
+
+- **ACV**: $48,000 at Business tier
+- **Gross margin**: 78% (infrastructure-heavy but high-value)
+- **CAC payback**: 12 months (longer sales cycle for infrastructure tools, but high retention)
+- **Net revenue retention**: 145%+ (data volumes grow, connectors expand, users increase)
+
+## Execution Playbook
+
+### Phase 1: Foundation (Months 1–4)
+- Build connector framework with 30 most-requested sources (top SaaS + major databases)
+- Semantic layer with metric definitions, dimensions, and basic caching
+- Looker and Tableau as initial BI destinations
+- **Target**: 5 design partners from data engineering communities (dbt Slack, Data Engineering Weekly)
+
+### Phase 2: Product-Market Fit (Months 5–10)
+- Expand to 100+ connectors
+- Query federation for cross-source joins
+- Access control with row/column-level security
+- Add Power BI, Metabase, and Superset as destinations
+- **Target**: 30 paying customers, $1M ARR
+
+### Phase 3: Scale (Months 11–20)
+- DataLayer API for custom applications
+- VPC deployment for enterprise customers
+- Connector marketplace for community-built integrations
+- AI-powered query optimization and anomaly detection
+- **Target**: 100+ customers, $6M ARR
+
+## Risk Assessment
+
+| Risk | Severity | Mitigation |
+|---|---|---|
+| Connector maintenance burden | High | Automated testing harness; community contributions via marketplace |
+| Performance at scale | High | Rust core engine; distributed caching; query optimization |
+| Enterprise sales cycle length | Medium | Self-serve Team tier builds pipeline; product-led growth |
+| Warehouse vendor competition | Medium | Vendor-neutral positioning; multi-cloud support |
+| Open-source alternatives | Medium | Focus on managed experience, semantic layer depth, and enterprise features |
+
+## The Bottom Line
+
+DataLayer addresses a universal pain point: the integration tax. Every company with a data team experiences it, and the problem compounds as SaaS adoption grows. By combining extraction, semantic modeling, caching, and federation in a single middleware layer, DataLayer eliminates an entire category of engineering work.
+
+The defensibility comes from three sources: connector breadth (network effects as the ecosystem grows), semantic model depth (switching costs increase as companies encode institutional knowledge), and the caching layer (direct cost savings that justify the price on a pure ROI basis).
+
+With 78% gross margins and 145%+ net revenue retention, DataLayer follows the same trajectory as Snowflake and Datadog — infrastructure platforms that expand naturally with customer data volume and team size.
+
+**Estimated funding needed**: $5M seed round for 20-month runway to $6M ARR.

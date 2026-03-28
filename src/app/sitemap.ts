@@ -1,22 +1,11 @@
 import type { MetadataRoute } from "next";
-import { db } from "@/db";
-import { articles, categories } from "@/db/schema";
-import { isNotNull, desc } from "drizzle-orm";
-
-export const dynamic = "force-dynamic";
+import { getPublishedArticles, getAllCategories } from "@/lib/articles";
 
 const BASE_URL = process.env.NEXT_PUBLIC_APP_URL ?? "https://ideaflow.io";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const publishedArticles = await db
-    .select({ slug: articles.slug, updatedAt: articles.updatedAt })
-    .from(articles)
-    .where(isNotNull(articles.publishedAt))
-    .orderBy(desc(articles.publishedAt));
-
-  const allCategories = await db
-    .select({ slug: categories.slug })
-    .from(categories);
+  const publishedArticles = await getPublishedArticles();
+  const allCategories = await getAllCategories();
 
   return [
     {
@@ -39,7 +28,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     })),
     ...publishedArticles.map((article) => ({
       url: `${BASE_URL}/ideas/${article.slug}`,
-      lastModified: article.updatedAt,
+      lastModified: article.publishedAt,
       changeFrequency: "monthly" as const,
       priority: 0.8,
     })),

@@ -30,12 +30,6 @@ export default async function IdeasPage() {
               Ideas
             </Link>
             <Link
-              href="/auth/signin"
-              className="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors"
-            >
-              Sign in
-            </Link>
-            <Link
               href="/auth/signup"
               className="rounded-lg bg-gray-900 px-4 py-2 text-sm font-medium text-white hover:bg-gray-800 transition-colors"
             >

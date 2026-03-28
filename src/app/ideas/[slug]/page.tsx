@@ -196,12 +196,6 @@ export default async function ArticlePage({ params }: PageProps) {
                   >
                     Subscribe to read full article
                   </Link>
-                  <Link
-                    href="/auth/signin"
-                    className="rounded-lg border border-gray-300 px-6 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors"
-                  >
-                    Sign in
-                  </Link>
                 </div>
               </div>
             </div>

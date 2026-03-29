@@ -1,0 +1,188 @@
+---
+title: "HireLoop: AI-Powered Recruiting Automation for the Companies That Can't Afford a Recruiting Team"
+slug: hireloop
+excerpt: "Companies with 10–150 employees are stuck between unaffordable enterprise recruiting software and inadequate SMB tools. An AI recruiting platform that handles sourcing, screening, and scheduling can cut time-to-hire from 45 days to 14 — without a dedicated recruiter."
+publishedAt: "2026-03-30"
+author: "IdeaFlow Research"
+category: "HR Tech / AI"
+tier: "pro"
+tags: ["hr-tech", "recruiting", "ai", "smb", "automation"]
+estimatedReadTime: "12 min"
+---
+
+**A 40-person software company needs to hire a senior backend engineer. The CEO posts on LinkedIn and Indeed, gets 127 applications in a week, and spends 6 hours reviewing resumes. She does 12 screening calls, of which 9 were clearly unqualified but somehow passed the resume filter. Four weeks in, she's exhausted, the role is still open, and her best engineers are losing 10 hours a week doing candidate interviews that are going nowhere. She's paying $149/month for an ATS that can post jobs and track applicants. It cannot screen candidates, write outreach messages, coordinate schedules, or predict who will actually succeed in the role. Enterprise recruiting software — Greenhouse, Lever, Workday — costs $15,000–$30,000/year and is designed for companies with a dedicated recruiting team. She has zero dedicated recruiters. She is the recruiting team.**
+
+---
+
+## The Problem: The Recruiting Gap for Growing Companies
+
+There's a massive gap in the recruiting software market between two tiers:
+
+**Enterprise (150+ employees)**: Greenhouse, Lever, Workday, iCIMS. Sophisticated, feature-complete platforms with structured interviewing, offer management, DE&I analytics, and HRIS integration. Price: $15,000–$50,000+/year. Requires a dedicated recruiter or HR team to operate.
+
+**SMB (0–10 employees)**: Workable, BreezyHR, JazzHR. Basic ATS functionality — job posting, application tracking, basic email templates. Price: $149–$299/month. No AI, no sourcing, no intelligence.
+
+**The missing middle**: Companies with 10–150 employees. There are approximately **600,000 companies** in this size range in the US. They make 3–10 hires per year. They don't have a dedicated recruiting team (hiring is the CEO or a department manager's part-time responsibility). They need the capabilities of Greenhouse but can't justify the price or complexity.
+
+### What "Recruiting" Actually Looks Like at a 40-Person Company
+
+When a growing SMB needs to hire, this is what happens:
+
+1. **The hiring manager writes a job description** — usually a copy-paste from a similar job they found on LinkedIn, with requirements that don't actually match what they need
+2. **They post to Indeed and LinkedIn** — and get flooded with applicants of wildly varying quality, many of whom applied via one-click apply without reading the description
+3. **Resume review** — 2–4 hours of manual reading, filtering by gut feel with no consistency or documentation
+4. **Screening calls** — 30-minute calls that are often redundant (the information is on the resume) and poorly structured
+5. **Scheduling coordination** — 8–12 emails to schedule each interview, often taking 3–5 days
+6. **Interview debriefs** — informal conversations with no structured scoring, leading to "I liked her" vs. "I preferred the other guy" decisions
+7. **Reference checks** — often skipped because they're time-consuming and "nobody gives a bad reference anyway"
+8. **Offer management** — a Word document, negotiations by phone, an offer letter sent as a PDF
+
+Total time investment per hire: **40–80 hours** of hiring manager time. At a manager's loaded cost of $80/hour, that's **$3,200–$6,400 in internal labor cost** per hire — before any job board fees, agency fees, or failed-hire costs.
+
+### The Cost of Getting It Wrong
+
+The real problem isn't the time — it's the **failure rate**. Studies consistently show that 46% of new hires fail within 18 months, primarily because:
+- Skills were misassessed in the interview process
+- Cultural fit wasn't evaluated rigorously
+- The job description didn't accurately describe the role
+- References weren't checked (or the right questions weren't asked)
+
+A bad hire at the $80K salary level costs the company **$16,000–$32,000** in direct costs (severance, re-hiring, training) plus the productivity loss and team disruption.
+
+SMBs fail at hiring not because they make lazy decisions — they make rushed decisions with too little data and too little structure.
+
+---
+
+## The Idea: AI-Powered Recruiting Automation for the Mid-Market
+
+**HireLoop** is an AI recruiting platform built specifically for companies with 10–150 employees. It handles the four most time-intensive parts of recruiting — screening, sourcing, scheduling, and structure — making it possible for a busy hiring manager to run a rigorous hiring process in 8 hours instead of 80.
+
+### Module 1 — Intelligent Application Screening
+
+When candidates apply, HireLoop doesn't just store their resumes — it evaluates them.
+
+**AI resume scoring**: Each application is scored on a 0–100 scale against the role's requirements. The model considers:
+- Required skills match (hard requirements from the job description)
+- Experience relevance (similar roles, similar-stage companies, relevant industries)
+- Career trajectory (ascending responsibility, appropriate tenure patterns)
+- Education fit (when relevant)
+- "Must avoid" flags (job-hopping patterns beyond threshold, employment gaps without explanation, missing hard requirements)
+
+**Knockout questions**: HireLoop automatically generates 3–5 role-specific screening questions and sends them to every applicant after they apply. Answers are AI-scored. A question like "Describe your experience with distributed database architecture" generates a free-text answer that HireLoop scores for depth, accuracy, and relevance — distinguishing the senior engineer from the candidate who listed "PostgreSQL" as a skill on a resume but has never worked with databases at scale.
+
+**Stack ranking with explanation**: The hiring manager opens HireLoop and sees candidates ranked, with a plain-language explanation for each score: "Sarah ranked #3 of 127 applicants. Strong match: 6 years backend engineering with 3 at a similar-stage SaaS company, strong system design background, her knockout answer demonstrated deep knowledge of database indexing. Minor gap: no direct experience with your specific cloud provider (AWS vs. her GCP background), but this is learnable."
+
+**Time saved**: From 4 hours of resume review to 45 minutes reviewing HireLoop's ranked stack with explanations.
+
+### Module 2 — Proactive Sourcing
+
+For roles where inbound applications are insufficient (senior engineering, specialized skills, executive), HireLoop runs outbound sourcing campaigns.
+
+**Candidate discovery**: HireLoop searches LinkedIn, GitHub, AngelList, and HireLoop's own candidate network for people matching the role criteria. AI filters for passive candidates — people currently employed at relevant companies who haven't applied for jobs in 6+ months (signal: they're not desperate, which usually means they're good).
+
+**Personalized outreach generation**: For each candidate, HireLoop generates a personalized cold outreach message based on their actual background: "Hi Marcus — I noticed your work on the Kafka consumer group optimization at TechCorp that you published on Medium. We're building similar infrastructure at [Company] and could use someone with your distributed systems depth..."
+
+This personalization isn't a mail-merge — it pulls specific details from the candidate's profile and writes genuinely personalized messages. Response rates are 3–4× higher than generic outreach.
+
+**Outreach management**: Automated follow-up sequences (2 touches, then stop), response tracking, and candidate pipeline management. The hiring manager approves the message templates and candidate list, HireLoop handles execution.
+
+### Module 3 — Automated Scheduling
+
+The biggest time drain in recruiting isn't decision-making — it's **logistics**.
+
+HireLoop integrates with Google Calendar and Outlook to read the interviewing team's availability, then:
+1. Sends candidates a self-scheduling link with available slots
+2. Confirms the interview with a calendar invite to all parties
+3. Sends automated reminders 24 hours and 1 hour before
+4. Handles rescheduling requests without human involvement
+
+For a typical 3-stage interview process, this eliminates **15–25 scheduling emails per candidate**.
+
+### Module 4 — Structured Interviews and Collaborative Decisions
+
+The highest-leverage intervention in recruiting is **structured interviewing** — asking every candidate the same questions with the same scoring rubric. Research shows structured interviews are 2× more predictive of job performance than unstructured conversations.
+
+**Automated interview guides**: Based on the role and level, HireLoop generates a complete structured interview guide with behavioral questions, technical questions, scoring rubrics, and suggested follow-up probes. Interviewers get this guide 24 hours before the interview.
+
+**Scorecard collection**: After each interview, the interviewer receives a mobile-friendly scorecard with the structured questions and a 1–5 rating scale. Takes 8 minutes to complete. HireLoop aggregates scores across all interviewers and shows where there was consensus and where there was disagreement.
+
+**Decision meeting prep**: HireLoop generates a candidate comparison summary: side-by-side scorecard averages, interviewer notes, compensation expectations, and a recommendation based on the aggregated scores. The hiring team spends 20 minutes making a data-informed decision instead of 90 minutes of "well, I liked..." conversations.
+
+---
+
+## Market Size
+
+- **TAM**: HR software market: **$35B+** in the US, growing 10% CAGR. Recruiting/ATS segment: **$8–12B**
+- **SAM**: SMB and mid-market recruiting software (10–500 employees): **$3–4B**
+- **SOM**: 30,000 companies × $4,800/year = **$144M ARR** at 5% penetration of the serviceable market
+
+**Market signal**: The SMB HR software market is actively disrupted. Rippling (HR + payroll + recruiting) reached $1.2B ARR in 2025. Ashby (ATS for startups) raised at a $400M+ valuation. But neither Rippling nor Ashby focuses specifically on AI-driven recruiting for the 10–150 employee segment.
+
+---
+
+## Competitive Landscape
+
+| Platform | Price | Gap |
+|----------|-------|-----|
+| **Greenhouse** | $15,000–$30,000+/year | Enterprise complexity, requires dedicated recruiter |
+| **Lever** | $8,000–$20,000/year | Similar to Greenhouse, mid-market focus but still complex |
+| **Workable** | $189–$628/month | Good job posting but minimal AI, no sourcing, weak screening |
+| **Ashby** | $300–$600/month | Strong ATS, minimal AI screening automation |
+| **Breezy HR** | $149–$399/month | Basic ATS, SMB-focused but no AI capabilities |
+| **LinkedIn Recruiter** | $8,999/year | Sourcing only, no ATS, expensive for SMBs |
+
+**The gap**: No platform combines AI-powered screening + outbound sourcing + automated scheduling + structured interviewing at a price point that makes sense for a 40-person company with 5–10 hires/year.
+
+---
+
+## Business Model
+
+| Tier | Features | Price |
+|------|----------|-------|
+| **Starter** | AI screening, job posting, basic ATS | $149/mo (up to 3 active roles) |
+| **Growth** | + Outbound sourcing, scheduling automation | $349/mo (up to 10 active roles) |
+| **Scale** | + Structured interviews, analytics, HRIS integration | $649/mo (unlimited roles) |
+| **Agency** | For recruiting firms managing multiple clients | $1,200/mo |
+
+**Unit economics**:
+- CAC: $600 (content marketing, LinkedIn community, HR influencer partnerships)
+- ACV: $4,200 (Growth tier)
+- LTV: $21,000 (5-year retention — companies that solve their hiring problem with HireLoop grow and hire more, increasing value)
+- LTV:CAC: 35x
+- Gross margin: 78%
+
+**Expansion revenue**: As HireLoop customers grow (from 40 to 150 employees), they upgrade tiers. A company that starts at Starter ($149) naturally expands to Growth ($349) as they make more hires. The customer base self-expands with company growth.
+
+---
+
+## Go-to-Market
+
+**Content-led growth**: The target buyer (hiring manager at a 40-person company) is drowning in bad hiring advice and actively searching for tools. Content plays: "How to screen 100 resumes in 1 hour," "The structured interview guide for your first engineering hire," "Why 40% of your hires fail in year 1." SEO-driven content that demonstrates HireLoop's approach before asking for a trial.
+
+**Community play**: Founder communities (Y Combinator alumni, Indie Hackers, Founder Slack groups) are full of hiring managers making their first 10–50 hires and desperate for tooling. A free "First 10 Hires" resource pack (interview templates, job description library, offer letter templates) captures emails and demonstrates value.
+
+**PEO / HR consultant channel**: Professional Employer Organizations (TriNet, Justworks, Rippling) and HR consultants serve tens of thousands of SMBs. A referral partnership where HR consultants recommend HireLoop to clients — and earn a commission — provides low-CAC distribution at scale.
+
+**Integration partnerships**: HireLoop integrates with the HRIS systems (Gusto, BambooHR, Rippling) that SMBs already use. When a company adds a new position in their HRIS, HireLoop creates a draft job description and starts the workflow. The integration creates seamless distribution through adjacent product footprints.
+
+---
+
+## Defensibility
+
+1. **Structured interview IP**: HireLoop's library of 2,000+ role-specific structured interview questions, scoring rubrics, and outcome data is a proprietary dataset. As customers complete interviews and track outcomes (did the hire succeed?), the model learns which questions predict performance — a data moat no new entrant can quickly replicate.
+
+2. **Candidate database**: Over time, HireLoop builds a searchable database of screened, qualified candidates who have applied to HireLoop-powered job postings. This becomes a talent network that's directly monetizable and creates network effects.
+
+3. **Switching costs**: Once a company has 12 months of recruiting data in HireLoop — structured interview scores, hiring outcomes, pipeline analytics — switching to a new ATS means losing institutional knowledge about what hiring processes work.
+
+4. **Company growth flywheel**: HireLoop's best customers are growing companies. A company that starts with 40 employees and uses HireLoop to hire well becomes a 200-person company in 3 years — still using HireLoop, now at the Scale tier. Revenue grows with the customer without any additional sales cost.
+
+---
+
+## The Bottom Line
+
+The 600,000 US companies in the 10–150 employee range make millions of hires per year using inadequate tools, producing predictably bad outcomes. HireLoop doesn't require companies to change their hiring philosophy — it makes their existing process dramatically faster, more consistent, and more data-driven.
+
+At $349/month for the Growth tier, HireLoop pays for itself the first time it saves a hiring manager 40 hours on a single search. The economic argument is trivial. The path to $10M ARR is 2,400 Growth-tier customers — a tiny fraction of the serviceable market.
+
+**This is HR's version of the move from spreadsheet accounting to QuickBooks. The market is massive, the pain is acute, the tooling gap is real, and the first product to nail the SMB mid-market recruiting experience will own a multi-billion dollar category.**

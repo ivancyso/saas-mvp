@@ -1,31 +1,16 @@
-import { auth } from "@/auth";
-import { NextResponse } from "next/server";
+import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
 
-const protectedRoutes = ["/dashboard"];
-const authRoutes = ["/auth/signin", "/auth/signup"];
+const isProtectedRoute = createRouteMatcher(["/dashboard(.*)"]);
 
-export default auth((req) => {
-  const { nextUrl } = req;
-  const isLoggedIn = !!req.auth;
-
-  const isProtected = protectedRoutes.some((route) =>
-    nextUrl.pathname.startsWith(route)
-  );
-  const isAuthRoute = authRoutes.some((route) =>
-    nextUrl.pathname.startsWith(route)
-  );
-
-  if (isProtected && !isLoggedIn) {
-    return NextResponse.redirect(new URL("/auth/signin", nextUrl));
+export default clerkMiddleware(async (auth, req) => {
+  if (isProtectedRoute(req)) {
+    await auth.protect();
   }
-
-  if (isAuthRoute && isLoggedIn) {
-    return NextResponse.redirect(new URL("/dashboard", nextUrl));
-  }
-
-  return NextResponse.next();
 });
 
 export const config = {
-  matcher: ["/((?!api|_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt).*)"],
+  matcher: [
+    "/((?!_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt).*)",
+    "/(api|trpc)(.*)",
+  ],
 };

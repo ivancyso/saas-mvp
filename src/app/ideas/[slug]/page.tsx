@@ -1,7 +1,9 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
+import { auth } from "@clerk/nextjs/server";
 import { getArticleBySlug } from "@/lib/articles";
+import { getUserSubscription, isProSubscriber } from "@/lib/subscription";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import remarkGfm from "remark-gfm";
 import { Lock } from "lucide-react";
@@ -46,7 +48,15 @@ export default async function ArticlePage({ params }: PageProps) {
     notFound();
   }
 
-  const hasAccess = !article.isPremium;
+  // Server-side subscription check
+  let hasAccess = !article.isPremium;
+  if (article.isPremium) {
+    const { userId } = await auth();
+    if (userId) {
+      const sub = await getUserSubscription(userId);
+      hasAccess = isProSubscriber(sub);
+    }
+  }
 
   const articleJsonLd = {
     "@context": "https://schema.org",
@@ -191,10 +201,16 @@ export default async function ArticlePage({ params }: PageProps) {
                 </p>
                 <div className="mt-6 flex items-center justify-center gap-3">
                   <Link
-                    href="/auth/signup"
+                    href="/sign-up"
                     className="rounded-lg bg-gray-900 px-6 py-2.5 text-sm font-medium text-white hover:bg-gray-800 transition-colors"
                   >
-                    Subscribe to read full article
+                    Subscribe — $29/month
+                  </Link>
+                  <Link
+                    href="/sign-in"
+                    className="rounded-lg border border-gray-300 px-6 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors"
+                  >
+                    Sign in
                   </Link>
                 </div>
               </div>

@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
 import { getPublishedArticles, getAllCategories } from "@/lib/articles";
 
-const BASE_URL = process.env.NEXT_PUBLIC_APP_URL ?? "https://ideaflow.io";
+const BASE_URL = process.env.NEXT_PUBLIC_APP_URL ?? "https://saas-mvp-three.vercel.app";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const publishedArticles = await getPublishedArticles();

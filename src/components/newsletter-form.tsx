@@ -27,7 +27,7 @@ export function NewsletterForm() {
       }
 
       setStatus("success");
-      setMessage("You're in! Check your inbox for a confirmation.");
+      setMessage("You are in! Weekly startup ideas in your inbox.");
       setEmail("");
     } catch {
       setStatus("error");

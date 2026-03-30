@@ -43,7 +43,7 @@ export default async function LandingPage() {
               About
             </Link>
             <Link
-              href="#pricing"
+              href="/pricing"
               className="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors"
             >
               Pricing
@@ -283,7 +283,7 @@ export default async function LandingPage() {
             <Link href="/about" className="hover:text-gray-700 transition-colors">
               About
             </Link>
-            <Link href="#pricing" className="hover:text-gray-700 transition-colors">
+            <Link href="/pricing" className="hover:text-gray-700 transition-colors">
               Pricing
             </Link>
           </div>

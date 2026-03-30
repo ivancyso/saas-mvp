@@ -12,6 +12,7 @@ export interface ArticleFrontmatter {
   tier: "free" | "pro";
   publishedAt: string;
   author: string;
+  tags?: string[];
 }
 
 export interface ArticleMeta {
@@ -25,6 +26,7 @@ export interface ArticleMeta {
   authorName: string;
   publishedAt: Date;
   coverImage: string | null;
+  tags: string[];
 }
 
 export interface ArticleFull extends ArticleMeta {
@@ -72,6 +74,7 @@ function parseArticleFile(
     authorName: frontmatter.author ?? "Editorial Team",
     publishedAt: new Date(frontmatter.publishedAt),
     coverImage: null,
+    tags: frontmatter.tags ?? [],
   };
 
   return { meta, content };

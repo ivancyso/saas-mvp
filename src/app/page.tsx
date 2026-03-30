@@ -23,6 +23,12 @@ export default async function LandingPage() {
               Ideas
             </Link>
             <Link
+              href="/tools/idea-finder"
+              className="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors"
+            >
+              Free Tools
+            </Link>
+            <Link
               href="/about"
               className="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors"
             >
@@ -59,12 +65,18 @@ export default async function LandingPage() {
           Market sizing, competitive analysis, and step-by-step execution
           playbooks — so you can build with confidence.
         </p>
-        <div className="mt-10 flex items-center justify-center gap-4">
+        <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
           <Link
             href="/ideas"
             className="rounded-lg bg-blue-600 px-6 py-3 text-base font-medium text-white hover:bg-blue-700 transition-colors"
           >
             Start reading for free
+          </Link>
+          <Link
+            href="/tools/idea-finder"
+            className="rounded-lg border border-gray-300 px-6 py-3 text-base font-medium text-gray-700 hover:bg-gray-50 transition-colors"
+          >
+            Try the Idea Finder →
           </Link>
           <Link
             href="#pricing"

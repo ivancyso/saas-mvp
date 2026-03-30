@@ -27,6 +27,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       title: article.title,
       description: article.excerpt,
       type: "article",
+      url: `/ideas/${slug}`,
+      siteName: "IdeaFlow",
       publishedTime: article.publishedAt?.toISOString(),
       authors: [article.authorName],
       ...(article.coverImage ? { images: [article.coverImage] } : {}),
@@ -183,36 +185,48 @@ export default async function ArticlePage({ params }: PageProps) {
             <MDXRemote source={article.content} options={{ mdxOptions: { remarkPlugins: [remarkGfm] } }} />
           </div>
         ) : (
-          <div className="mt-10">
-            <div
-              className="prose prose-lg prose-gray max-w-none relative overflow-hidden"
-              style={{ maxHeight: "400px" }}
-            >
-              <MDXRemote source={article.content.slice(0, 600)} options={{ mdxOptions: { remarkPlugins: [remarkGfm] } }} />
+          <div className="mt-10 relative">
+            <div className="prose prose-lg prose-gray max-w-none">
+              <MDXRemote
+                source={article.content
+                  .split(/\n\n+/)
+                  .filter((block) => block.trim().length > 0)
+                  .slice(0, 3)
+                  .join("\n\n")}
+                options={{ mdxOptions: { remarkPlugins: [remarkGfm] } }}
+              />
             </div>
-            <div className="relative -mt-24 pt-24 bg-gradient-to-t from-white via-white/95 to-transparent">
-              <div className="rounded-xl border-2 border-gray-200 bg-gray-50 p-8 text-center">
-                <Lock className="mx-auto h-8 w-8 text-gray-400" />
-                <h3 className="mt-4 text-xl font-semibold text-gray-900">
-                  This is a Pro article
-                </h3>
-                <p className="mt-2 text-gray-600">
-                  Subscribe to read the full research. Get access to all startup ideas for $29/month.
-                </p>
-                <div className="mt-6 flex items-center justify-center gap-3">
-                  <Link
-                    href="/sign-up"
-                    className="rounded-lg bg-gray-900 px-6 py-2.5 text-sm font-medium text-white hover:bg-gray-800 transition-colors"
-                  >
-                    Subscribe — $29/month
-                  </Link>
-                  <Link
-                    href="/sign-in"
-                    className="rounded-lg border border-gray-300 px-6 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors"
-                  >
-                    Sign in
-                  </Link>
-                </div>
+            <div
+              className="absolute bottom-0 left-0 right-0 h-48 pointer-events-none"
+              style={{
+                backdropFilter: "blur(4px)",
+                WebkitBackdropFilter: "blur(4px)",
+                maskImage: "linear-gradient(to bottom, transparent 0%, black 40%)",
+                WebkitMaskImage: "linear-gradient(to bottom, transparent 0%, black 40%)",
+              }}
+            />
+            <div className="absolute bottom-0 left-0 right-0 h-48 bg-gradient-to-t from-white via-white/80 to-transparent pointer-events-none" />
+            <div className="relative mt-8 flex flex-col items-center text-center py-10">
+              <Lock className="h-8 w-8 text-gray-400" />
+              <h3 className="mt-4 text-xl font-semibold text-gray-900">
+                Continue reading with Pro
+              </h3>
+              <p className="mt-2 text-gray-600 max-w-sm">
+                Get full access to this research and all startup ideas for $29/month.
+              </p>
+              <div className="mt-6 flex items-center justify-center gap-3">
+                <Link
+                  href="/sign-up"
+                  className="rounded-lg bg-gray-900 px-6 py-2.5 text-sm font-medium text-white hover:bg-gray-800 transition-colors"
+                >
+                  Unlock Full Article — $29/mo
+                </Link>
+                <Link
+                  href="/sign-in"
+                  className="rounded-lg border border-gray-300 px-6 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors"
+                >
+                  Sign in
+                </Link>
               </div>
             </div>
           </div>

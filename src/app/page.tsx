@@ -3,6 +3,7 @@ import { Check } from "lucide-react";
 import { PLANS } from "@/lib/plans";
 import { NewsletterForm } from "@/components/newsletter-form";
 import { getAllCategories } from "@/lib/articles";
+import { SavedNavLink } from "@/components/saved-nav-link";
 
 export default async function LandingPage() {
   const categories = await getAllCategories();
@@ -22,6 +23,13 @@ export default async function LandingPage() {
             >
               Ideas
             </Link>
+            <Link
+              href="/newsletter"
+              className="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors"
+            >
+              Newsletter
+            </Link>
+            <SavedNavLink />
             <Link
               href="/tools/idea-finder"
               className="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors"

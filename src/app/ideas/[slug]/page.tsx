@@ -8,6 +8,8 @@ import { MDXRemote } from "next-mdx-remote/rsc";
 import remarkGfm from "remark-gfm";
 import { Lock } from "lucide-react";
 import { ShareButtons } from "@/components/share-buttons";
+import { BookmarkButton } from "@/components/bookmark-button";
+import { SavedNavLink } from "@/components/saved-nav-link";
 
 function calcReadingTime(content: string): number {
   const words = content.trim().split(/\s+/).length;
@@ -122,6 +124,13 @@ export default async function ArticlePage({ params }: PageProps) {
               Ideas
             </Link>
             <Link
+              href="/newsletter"
+              className="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors"
+            >
+              Newsletter
+            </Link>
+            <SavedNavLink />
+            <Link
               href="/about"
               className="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors"
             >
@@ -191,10 +200,13 @@ export default async function ArticlePage({ params }: PageProps) {
               )}
               <span>{readingTime} min read</span>
             </div>
-            <ShareButtons
-              title={article.title}
-              url={`${BASE_URL}/ideas/${slug}`}
-            />
+            <div className="flex items-center gap-3">
+              <BookmarkButton slug={slug} />
+              <ShareButtons
+                title={article.title}
+                url={`${BASE_URL}/ideas/${slug}`}
+              />
+            </div>
           </div>
         </header>
 

@@ -2,6 +2,8 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { getPublishedArticles, getAllCategories } from "@/lib/articles";
 import { Lock } from "lucide-react";
+import { BookmarkButton } from "@/components/bookmark-button";
+import { SavedNavLink } from "@/components/saved-nav-link";
 
 export const metadata: Metadata = {
   title: "Startup Ideas | IdeaFlow",
@@ -29,6 +31,13 @@ export default async function IdeasPage() {
             >
               Ideas
             </Link>
+            <Link
+              href="/newsletter"
+              className="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors"
+            >
+              Newsletter
+            </Link>
+            <SavedNavLink />
             <Link
               href="/about"
               className="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors"
@@ -75,54 +84,62 @@ export default async function IdeasPage() {
 
         <div className="mt-12 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
           {articles.map((article) => (
-            <Link
+            <div
               key={article.id}
-              href={`/ideas/${article.slug}`}
-              className="group rounded-xl border border-gray-200 overflow-hidden hover:shadow-lg transition-shadow"
+              className="relative rounded-xl border border-gray-200 overflow-hidden hover:shadow-lg transition-shadow"
             >
-              {article.coverImage && (
-                <div className="aspect-[16/9] bg-gray-100 overflow-hidden">
-                  <img
-                    src={article.coverImage}
-                    alt={article.title}
-                    className="h-full w-full object-cover group-hover:scale-105 transition-transform duration-300"
-                  />
+              <BookmarkButton
+                slug={article.slug}
+                className="absolute top-3 right-3 z-10"
+              />
+              <Link
+                href={`/ideas/${article.slug}`}
+                className="group block"
+              >
+                {article.coverImage && (
+                  <div className="aspect-[16/9] bg-gray-100 overflow-hidden">
+                    <img
+                      src={article.coverImage}
+                      alt={article.title}
+                      className="h-full w-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    />
+                  </div>
+                )}
+                <div className="p-6">
+                  <div className="flex items-center gap-2">
+                    {article.categoryName && (
+                      <span className="text-xs font-medium uppercase tracking-wide text-blue-600">
+                        {article.categoryName}
+                      </span>
+                    )}
+                    {article.isPremium && (
+                      <span className="flex items-center gap-1 rounded-full bg-amber-100 px-2 py-0.5 text-xs font-semibold text-amber-700">
+                        <Lock className="h-3.5 w-3.5" />
+                        Pro
+                      </span>
+                    )}
+                  </div>
+                  <h2 className="mt-2 text-lg font-semibold text-gray-900 group-hover:text-blue-600 transition-colors">
+                    {article.title}
+                  </h2>
+                  <p className="mt-2 text-sm text-gray-600 line-clamp-3">
+                    {article.excerpt}
+                  </p>
+                  <div className="mt-4 flex items-center justify-between text-xs text-gray-500">
+                    <span>{article.authorName}</span>
+                    {article.publishedAt && (
+                      <time dateTime={article.publishedAt.toISOString()}>
+                        {article.publishedAt.toLocaleDateString("en-US", {
+                          month: "short",
+                          day: "numeric",
+                          year: "numeric",
+                        })}
+                      </time>
+                    )}
+                  </div>
                 </div>
-              )}
-              <div className="p-6">
-                <div className="flex items-center gap-2">
-                  {article.categoryName && (
-                    <span className="text-xs font-medium uppercase tracking-wide text-blue-600">
-                      {article.categoryName}
-                    </span>
-                  )}
-                  {article.isPremium && (
-                    <span className="flex items-center gap-1 rounded-full bg-amber-100 px-2 py-0.5 text-xs font-semibold text-amber-700">
-                      <Lock className="h-3.5 w-3.5" />
-                      Pro
-                    </span>
-                  )}
-                </div>
-                <h2 className="mt-2 text-lg font-semibold text-gray-900 group-hover:text-blue-600 transition-colors">
-                  {article.title}
-                </h2>
-                <p className="mt-2 text-sm text-gray-600 line-clamp-3">
-                  {article.excerpt}
-                </p>
-                <div className="mt-4 flex items-center justify-between text-xs text-gray-500">
-                  <span>{article.authorName}</span>
-                  {article.publishedAt && (
-                    <time dateTime={article.publishedAt.toISOString()}>
-                      {article.publishedAt.toLocaleDateString("en-US", {
-                        month: "short",
-                        day: "numeric",
-                        year: "numeric",
-                      })}
-                    </time>
-                  )}
-                </div>
-              </div>
-            </Link>
+              </Link>
+            </div>
           ))}
         </div>
 

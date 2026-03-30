@@ -2,8 +2,11 @@ import Link from "next/link";
 import { Check } from "lucide-react";
 import { PLANS } from "@/lib/plans";
 import { NewsletterForm } from "@/components/newsletter-form";
+import { getAllCategories } from "@/lib/articles";
 
-export default function LandingPage() {
+export default async function LandingPage() {
+  const categories = await getAllCategories();
+
   return (
     <div className="min-h-screen bg-white">
       {/* Nav */}
@@ -18,6 +21,12 @@ export default function LandingPage() {
               className="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors"
             >
               Ideas
+            </Link>
+            <Link
+              href="/about"
+              className="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors"
+            >
+              About
             </Link>
             <Link
               href="#pricing"
@@ -53,9 +62,9 @@ export default function LandingPage() {
         <div className="mt-10 flex items-center justify-center gap-4">
           <Link
             href="/ideas"
-            className="rounded-lg bg-gray-900 px-6 py-3 text-base font-medium text-white hover:bg-gray-800 transition-colors"
+            className="rounded-lg bg-blue-600 px-6 py-3 text-base font-medium text-white hover:bg-blue-700 transition-colors"
           >
-            Browse ideas
+            Start reading for free
           </Link>
           <Link
             href="#pricing"
@@ -65,6 +74,29 @@ export default function LandingPage() {
           </Link>
         </div>
       </section>
+
+      {/* Browse by Category */}
+      {categories.length > 0 && (
+        <section className="border-t border-gray-100 py-16">
+          <div className="mx-auto max-w-6xl px-6">
+            <h2 className="text-2xl font-bold text-gray-900">Browse by Category</h2>
+            <p className="mt-2 text-gray-600">
+              Explore startup ideas by industry and opportunity type.
+            </p>
+            <div className="mt-6 flex flex-wrap gap-3">
+              {categories.map((cat) => (
+                <Link
+                  key={cat.id}
+                  href={`/ideas/category/${cat.slug}`}
+                  className="rounded-full border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-900 hover:text-white hover:border-gray-900 transition-colors"
+                >
+                  {cat.name}
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* Sample article previews */}
       <section className="border-t border-gray-100 bg-gray-50 py-24">
@@ -211,6 +243,9 @@ export default function LandingPage() {
             Join our free weekly newsletter. New startup ideas with market analysis
             delivered every Tuesday.
           </p>
+          <p className="mt-4 text-sm font-medium text-blue-600">
+            Join 0+ founders getting weekly startup ideas
+          </p>
           <div className="mt-8">
             <NewsletterForm />
           </div>
@@ -224,6 +259,9 @@ export default function LandingPage() {
           <div className="flex gap-6">
             <Link href="/ideas" className="hover:text-gray-700 transition-colors">
               Ideas
+            </Link>
+            <Link href="/about" className="hover:text-gray-700 transition-colors">
+              About
             </Link>
             <Link href="#pricing" className="hover:text-gray-700 transition-colors">
               Pricing

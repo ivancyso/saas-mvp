@@ -7,6 +7,7 @@ import { getUserSubscription, isProSubscriber } from "@/lib/subscription";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import remarkGfm from "remark-gfm";
 import { Lock } from "lucide-react";
+import { ShareButtons } from "@/components/share-buttons";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -41,6 +42,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     },
   };
 }
+
+const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://ideaflow.app";
 
 export default async function ArticlePage({ params }: PageProps) {
   const { slug } = await params;
@@ -105,6 +108,12 @@ export default async function ArticlePage({ params }: PageProps) {
               Ideas
             </Link>
             <Link
+              href="/about"
+              className="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors"
+            >
+              About
+            </Link>
+            <Link
               href="/#pricing"
               className="rounded-lg bg-gray-900 px-4 py-2 text-sm font-medium text-white hover:bg-gray-800 transition-colors"
             >
@@ -116,24 +125,28 @@ export default async function ArticlePage({ params }: PageProps) {
 
       <article className="mx-auto max-w-3xl px-6 py-12">
         <div className="mb-8">
-          <Link
-            href="/ideas"
-            className="text-sm text-gray-500 hover:text-gray-700 transition-colors"
-          >
-            &larr; Back to all ideas
-          </Link>
+          <nav className="flex items-center gap-2 text-sm text-gray-500">
+            <Link href="/" className="hover:text-gray-700 transition-colors">Home</Link>
+            <span>/</span>
+            <Link href="/ideas" className="hover:text-gray-700 transition-colors">Ideas</Link>
+            {article.categoryName && (
+              <>
+                <span>/</span>
+                <Link
+                  href={`/ideas/category/${article.categorySlug}`}
+                  className="hover:text-gray-700 transition-colors"
+                >
+                  {article.categoryName}
+                </Link>
+              </>
+            )}
+            <span>/</span>
+            <span className="text-gray-900 font-medium truncate max-w-[200px]">{article.title}</span>
+          </nav>
         </div>
 
         <header>
           <div className="flex items-center gap-3 mb-4">
-            {article.categoryName && (
-              <Link
-                href={`/category/${article.categorySlug}`}
-                className="text-sm font-medium uppercase tracking-wide text-blue-600 hover:text-blue-700"
-              >
-                {article.categoryName}
-              </Link>
-            )}
             {article.isPremium && (
               <span className="flex items-center gap-1 text-sm font-medium text-amber-600">
                 <Lock className="h-3.5 w-3.5" />
@@ -150,17 +163,23 @@ export default async function ArticlePage({ params }: PageProps) {
             {article.excerpt}
           </p>
 
-          <div className="mt-6 flex items-center gap-4 text-sm text-gray-500 border-b border-gray-100 pb-8">
-            <span>By {article.authorName}</span>
-            {article.publishedAt && (
-              <time dateTime={article.publishedAt.toISOString()}>
-                {article.publishedAt.toLocaleDateString("en-US", {
-                  month: "long",
-                  day: "numeric",
-                  year: "numeric",
-                })}
-              </time>
-            )}
+          <div className="mt-6 flex items-center justify-between gap-4 text-sm text-gray-500 border-b border-gray-100 pb-8">
+            <div className="flex items-center gap-4">
+              <span>By {article.authorName}</span>
+              {article.publishedAt && (
+                <time dateTime={article.publishedAt.toISOString()}>
+                  {article.publishedAt.toLocaleDateString("en-US", {
+                    month: "long",
+                    day: "numeric",
+                    year: "numeric",
+                  })}
+                </time>
+              )}
+            </div>
+            <ShareButtons
+              title={article.title}
+              url={`${BASE_URL}/ideas/${slug}`}
+            />
           </div>
         </header>
 

@@ -1,0 +1,26 @@
+# IdeaFlow
+
+> Research-backed startup ideas for builders and entrepreneurs. We publish deep-dive breakdowns with market data, TAM estimates, and execution roadmaps.
+
+## Articles
+
+Our articles cover startup ideas across SaaS, ecommerce, AI, solo business, and more. Each article includes market research, competition analysis, and how-to guidance.
+
+## Categories
+
+- SaaS ideas: /ideas/category/saas
+- AI business ideas: /ideas/category/ai
+- Home business: /ideas/category/home-business
+- Ecommerce: /ideas/category/ecommerce
+
+## Popular articles
+
+- B2B SaaS ideas: /ideas/b2b-saas-ideas
+- Micro-SaaS ideas: /ideas/micro-saas-ideas
+- AI business ideas: /ideas/ai-business-ideas
+- Home business ideas: /ideas/home-business-ideas
+- Side hustle ideas: /ideas/side-hustle-ideas
+
+## Subscription
+
+Pro subscribers get full access to all premium research. $29/month at /#pricing.

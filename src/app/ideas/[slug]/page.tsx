@@ -2,12 +2,17 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { auth } from "@clerk/nextjs/server";
-import { getArticleBySlug } from "@/lib/articles";
+import { getArticleBySlug, getArticlesByCategory } from "@/lib/articles";
 import { getUserSubscription, isProSubscriber } from "@/lib/subscription";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import remarkGfm from "remark-gfm";
 import { Lock } from "lucide-react";
 import { ShareButtons } from "@/components/share-buttons";
+
+function calcReadingTime(content: string): number {
+  const words = content.trim().split(/\s+/).length;
+  return Math.max(1, Math.round(words / 200));
+}
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -52,6 +57,15 @@ export default async function ArticlePage({ params }: PageProps) {
   if (!article) {
     notFound();
   }
+
+  const readingTime = calcReadingTime(article.content);
+
+  const relatedArticles = article.categorySlug
+    ? (await getArticlesByCategory(article.categorySlug))
+        .filter((a) => a.slug !== slug)
+        .sort((a, b) => a.title.localeCompare(b.title))
+        .slice(0, 3)
+    : [];
 
   // Server-side subscription check
   let hasAccess = !article.isPremium;
@@ -175,6 +189,7 @@ export default async function ArticlePage({ params }: PageProps) {
                   })}
                 </time>
               )}
+              <span>{readingTime} min read</span>
             </div>
             <ShareButtons
               title={article.title}
@@ -249,6 +264,27 @@ export default async function ArticlePage({ params }: PageProps) {
               </div>
             </div>
           </div>
+        )}
+        {relatedArticles.length > 0 && (
+          <section className="mt-16 border-t border-gray-100 pt-12">
+            <h2 className="text-2xl font-bold text-gray-900 mb-6">Related Articles</h2>
+            <div className="grid gap-6 sm:grid-cols-3">
+              {relatedArticles.map((related) => (
+                <Link
+                  key={related.slug}
+                  href={`/ideas/${related.slug}`}
+                  className="group block rounded-xl border border-gray-200 p-5 hover:border-gray-300 hover:shadow-sm transition-all"
+                >
+                  <h3 className="font-semibold text-gray-900 group-hover:text-blue-600 transition-colors line-clamp-2">
+                    {related.title}
+                  </h3>
+                  {related.excerpt && (
+                    <p className="mt-2 text-sm text-gray-500 line-clamp-2">{related.excerpt}</p>
+                  )}
+                </Link>
+              ))}
+            </div>
+          </section>
         )}
       </article>
     </div>

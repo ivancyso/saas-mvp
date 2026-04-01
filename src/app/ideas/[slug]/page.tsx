@@ -6,14 +6,42 @@ import { getArticleBySlug, getArticlesByCategory } from "@/lib/articles";
 import { getUserSubscription, isProSubscriber } from "@/lib/subscription";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import remarkGfm from "remark-gfm";
+import rehypeSlug from "rehype-slug";
 import { Lock } from "lucide-react";
 import { ShareButtons } from "@/components/share-buttons";
 import { BookmarkButton } from "@/components/bookmark-button";
 import { SavedNavLink } from "@/components/saved-nav-link";
+import { ReadingProgress } from "@/components/reading-progress";
+import { TableOfContents } from "@/components/table-of-contents";
 
 function calcReadingTime(content: string): number {
   const words = content.trim().split(/\s+/).length;
   return Math.max(1, Math.round(words / 200));
+}
+
+interface TocItem {
+  id: string;
+  text: string;
+  level: 2 | 3;
+}
+
+function extractToc(content: string): TocItem[] {
+  const lines = content.split("\n");
+  const items: TocItem[] = [];
+  for (const line of lines) {
+    const h2 = line.match(/^## (.+)$/);
+    const h3 = line.match(/^### (.+)$/);
+    const match = h2 ?? h3;
+    if (!match) continue;
+    const text = match[1].trim();
+    const id = text
+      .toLowerCase()
+      .replace(/[^\w\s-]/g, "")
+      .replace(/\s+/g, "-")
+      .replace(/-+/g, "-");
+    items.push({ id, text, level: h2 ? 2 : 3 });
+  }
+  return items;
 }
 
 interface PageProps {
@@ -39,13 +67,17 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       siteName: "IdeaFlow",
       publishedTime: article.publishedAt?.toISOString(),
       authors: [article.authorName],
-      ...(article.coverImage ? { images: [article.coverImage] } : {}),
+      images: [
+        `/api/og?title=${encodeURIComponent(article.title)}&excerpt=${encodeURIComponent(article.excerpt)}`,
+      ],
     },
     twitter: {
       card: "summary_large_image",
       title: article.title,
       description: article.excerpt,
-      ...(article.coverImage ? { images: [article.coverImage] } : {}),
+      images: [
+        `/api/og?title=${encodeURIComponent(article.title)}&excerpt=${encodeURIComponent(article.excerpt)}`,
+      ],
     },
   };
 }
@@ -61,6 +93,7 @@ export default async function ArticlePage({ params }: PageProps) {
   }
 
   const readingTime = calcReadingTime(article.content);
+  const tocItems = extractToc(article.content);
 
   const relatedArticles = article.categorySlug
     ? (await getArticlesByCategory(article.categorySlug))
@@ -106,6 +139,7 @@ export default async function ArticlePage({ params }: PageProps) {
 
   return (
     <div className="min-h-screen bg-white">
+      <ReadingProgress />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }}
@@ -146,7 +180,9 @@ export default async function ArticlePage({ params }: PageProps) {
         </div>
       </nav>
 
-      <article className="mx-auto max-w-3xl px-6 py-12">
+      <div className="mx-auto max-w-6xl px-6 py-12 lg:flex lg:gap-12 lg:items-start">
+      <TableOfContents items={tocItems} />
+      <article className="min-w-0 flex-1 max-w-3xl">
         <div className="mb-8">
           <nav className="flex items-center gap-2 text-sm text-gray-500">
             <Link href="/" className="hover:text-gray-700 transition-colors">Home</Link>
@@ -228,7 +264,7 @@ export default async function ArticlePage({ params }: PageProps) {
               prose-img:rounded-xl
               prose-table:border-collapse prose-th:border prose-th:border-gray-300 prose-th:bg-gray-50 prose-th:px-4 prose-th:py-2 prose-td:border prose-td:border-gray-200 prose-td:px-4 prose-td:py-2"
           >
-            <MDXRemote source={article.content} options={{ mdxOptions: { remarkPlugins: [remarkGfm] } }} />
+            <MDXRemote source={article.content} options={{ mdxOptions: { remarkPlugins: [remarkGfm], rehypePlugins: [rehypeSlug] } }} />
           </div>
         ) : (
           <div className="mt-10 relative">
@@ -299,6 +335,7 @@ export default async function ArticlePage({ params }: PageProps) {
           </section>
         )}
       </article>
+      </div>
     </div>
   );
 }

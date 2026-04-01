@@ -7,12 +7,16 @@ import {
   CreditCard,
   LogOut,
   Menu,
+  BookOpen,
+  Bookmark,
 } from "lucide-react";
 import { signOut } from "@/auth";
 
 const navItems = [
-  { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
-  { href: "/dashboard/billing", label: "Billing", icon: CreditCard },
+  { href: "/dashboard", label: "Overview", icon: LayoutDashboard },
+  { href: "/dashboard/articles", label: "Premium Articles", icon: BookOpen },
+  { href: "/saved", label: "Saved Ideas", icon: Bookmark },
+  { href: "/api/stripe/portal", label: "Account & Billing", icon: CreditCard },
   { href: "/dashboard/settings", label: "Settings", icon: Settings },
 ];
 

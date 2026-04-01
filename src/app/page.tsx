@@ -4,6 +4,7 @@ import { PLANS } from "@/lib/plans";
 import { NewsletterForm } from "@/components/newsletter-form";
 import { getAllCategories } from "@/lib/articles";
 import { SavedNavLink } from "@/components/saved-nav-link";
+import { NavSearch } from "@/components/nav-search";
 
 export default async function LandingPage() {
   const categories = await getAllCategories();
@@ -48,6 +49,7 @@ export default async function LandingPage() {
             >
               Pricing
             </Link>
+            <NavSearch />
             <Link
               href="/auth/signup"
               className="rounded-lg bg-gray-900 px-4 py-2 text-sm font-medium text-white hover:bg-gray-800 transition-colors"

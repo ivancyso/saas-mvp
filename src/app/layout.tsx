@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { ClerkProvider } from "@clerk/nextjs";
+import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -37,6 +39,13 @@ export const metadata: Metadata = {
   metadataBase: new URL(
     process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000"
   ),
+  alternates: {
+    types: {
+      "application/rss+xml": [
+        { url: "/feed.xml", title: "IdeaFlow" },
+      ],
+    },
+  },
 };
 
 export default function RootLayout({
@@ -55,6 +64,8 @@ export default function RootLayout({
         ) : (
           children
         )}
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );

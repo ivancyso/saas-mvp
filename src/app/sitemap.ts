@@ -1,7 +1,10 @@
 import type { MetadataRoute } from "next";
 import { getPublishedArticles, getAllCategories } from "@/lib/articles";
 
-const BASE_URL = process.env.NEXT_PUBLIC_APP_URL ?? "https://saas-mvp-three.vercel.app";
+const BASE_URL =
+  process.env.NEXT_PUBLIC_SITE_URL ??
+  process.env.NEXT_PUBLIC_APP_URL ??
+  "https://startupinsider.co";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const publishedArticles = await getPublishedArticles();
@@ -21,7 +24,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.9,
     },
     ...allCategories.map((cat) => ({
-      url: `${BASE_URL}/category/${cat.slug}`,
+      url: `${BASE_URL}/ideas/category/${cat.slug}`,
       lastModified: new Date(),
       changeFrequency: "weekly" as const,
       priority: 0.7,

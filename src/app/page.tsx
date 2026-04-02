@@ -275,19 +275,39 @@ export default async function LandingPage() {
       </section>
 
       {/* Footer */}
-      <footer className="border-t border-gray-100 py-8">
-        <div className="mx-auto max-w-6xl px-6 flex items-center justify-between text-sm text-gray-500">
-          <span>&copy; {new Date().getFullYear()} IdeaFlow. All rights reserved.</span>
-          <div className="flex gap-6">
-            <Link href="/ideas" className="hover:text-gray-700 transition-colors">
-              Ideas
-            </Link>
-            <Link href="/about" className="hover:text-gray-700 transition-colors">
-              About
-            </Link>
-            <Link href="/pricing" className="hover:text-gray-700 transition-colors">
-              Pricing
-            </Link>
+      <footer className="border-t border-gray-100 py-12">
+        <div className="mx-auto max-w-6xl px-6">
+          {categories.length > 0 && (
+            <div className="mb-10">
+              <h3 className="text-xs font-semibold uppercase tracking-widest text-gray-400 mb-4">
+                Browse by Category
+              </h3>
+              <div className="flex flex-wrap gap-3">
+                {categories.slice(0, 6).map((cat) => (
+                  <Link
+                    key={cat.id}
+                    href={`/ideas/category/${cat.slug}`}
+                    className="text-sm text-gray-600 hover:text-gray-900 transition-colors"
+                  >
+                    {cat.name}
+                  </Link>
+                ))}
+              </div>
+            </div>
+          )}
+          <div className="flex items-center justify-between text-sm text-gray-500 border-t border-gray-100 pt-8">
+            <span>&copy; {new Date().getFullYear()} IdeaFlow. All rights reserved.</span>
+            <div className="flex gap-6">
+              <Link href="/ideas" className="hover:text-gray-700 transition-colors">
+                Ideas
+              </Link>
+              <Link href="/about" className="hover:text-gray-700 transition-colors">
+                About
+              </Link>
+              <Link href="/pricing" className="hover:text-gray-700 transition-colors">
+                Pricing
+              </Link>
+            </div>
           </div>
         </div>
       </footer>

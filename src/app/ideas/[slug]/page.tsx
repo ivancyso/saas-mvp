@@ -2,7 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { auth } from "@clerk/nextjs/server";
-import { getArticleBySlug, getArticlesByCategory } from "@/lib/articles";
+import { getArticleBySlug, getArticlesByCategory, getPublishedArticles } from "@/lib/articles";
 import { getUserSubscription, isProSubscriber } from "@/lib/subscription";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import remarkGfm from "remark-gfm";
@@ -48,6 +48,13 @@ interface PageProps {
   params: Promise<{ slug: string }>;
 }
 
+function truncateDescription(text: string, maxLen = 160): string {
+  if (text.length <= maxLen) return text;
+  const truncated = text.slice(0, maxLen - 1);
+  const lastSpace = truncated.lastIndexOf(" ");
+  return (lastSpace > 100 ? truncated.slice(0, lastSpace) : truncated) + "…";
+}
+
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;
   const article = await getArticleBySlug(slug);
@@ -56,12 +63,14 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     return { title: "Article Not Found | IdeaFlow" };
   }
 
+  const description = truncateDescription(article.excerpt);
+
   return {
     title: `${article.title} | IdeaFlow`,
-    description: article.excerpt,
+    description,
     openGraph: {
       title: article.title,
-      description: article.excerpt,
+      description,
       type: "article",
       url: `/ideas/${slug}`,
       siteName: "IdeaFlow",
@@ -74,7 +83,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     twitter: {
       card: "summary_large_image",
       title: article.title,
-      description: article.excerpt,
+      description,
       images: [
         `/api/og?title=${encodeURIComponent(article.title)}&excerpt=${encodeURIComponent(article.excerpt)}`,
       ],
@@ -95,12 +104,19 @@ export default async function ArticlePage({ params }: PageProps) {
   const readingTime = calcReadingTime(article.content);
   const tocItems = extractToc(article.content);
 
-  const relatedArticles = article.categorySlug
+  const sameCategoryArticles = article.categorySlug
     ? (await getArticlesByCategory(article.categorySlug))
         .filter((a) => a.slug !== slug)
         .sort((a, b) => a.title.localeCompare(b.title))
-        .slice(0, 3)
     : [];
+  const relatedArticles = sameCategoryArticles.length >= 3
+    ? sameCategoryArticles.slice(0, 3)
+    : await (async () => {
+        const all = await getPublishedArticles();
+        const sameSlugs = new Set(sameCategoryArticles.map((a) => a.slug));
+        const others = all.filter((a) => a.slug !== slug && !sameSlugs.has(a.slug));
+        return [...sameCategoryArticles, ...others].slice(0, 3);
+      })();
 
   // Server-side subscription check
   let hasAccess = !article.isPremium;

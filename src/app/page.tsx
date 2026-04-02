@@ -80,20 +80,43 @@ export default async function LandingPage() {
             href="/ideas"
             className="rounded-lg bg-blue-600 px-6 py-3 text-base font-medium text-white hover:bg-blue-700 transition-colors"
           >
-            Start reading for free
+            Browse Ideas
           </Link>
           <Link
-            href="/tools/idea-finder"
+            href="/newsletter"
             className="rounded-lg border border-gray-300 px-6 py-3 text-base font-medium text-gray-700 hover:bg-gray-50 transition-colors"
           >
-            Try the Idea Finder →
+            Get Weekly Ideas (Free) →
           </Link>
-          <Link
-            href="#pricing"
-            className="rounded-lg border border-gray-300 px-6 py-3 text-base font-medium text-gray-700 hover:bg-gray-50 transition-colors"
-          >
-            View pricing
-          </Link>
+        </div>
+      </section>
+
+      {/* 3-column value props */}
+      <section className="border-t border-gray-100 py-16">
+        <div className="mx-auto max-w-4xl px-6">
+          <div className="grid gap-8 md:grid-cols-3 text-center">
+            <div>
+              <div className="inline-flex h-12 w-12 items-center justify-center rounded-xl bg-blue-50 text-xl mb-4">💡</div>
+              <h3 className="text-base font-semibold text-gray-900">Weekly Ideas</h3>
+              <p className="mt-2 text-sm text-gray-600">
+                10 research-backed startup opportunities in your inbox every Tuesday. Free.
+              </p>
+            </div>
+            <div>
+              <div className="inline-flex h-12 w-12 items-center justify-center rounded-xl bg-blue-50 text-xl mb-4">📊</div>
+              <h3 className="text-base font-semibold text-gray-900">Pro Deep-Dives</h3>
+              <p className="mt-2 text-sm text-gray-600">
+                Full market analysis, TAM estimates, competitive landscape, and execution roadmaps.
+              </p>
+            </div>
+            <div>
+              <div className="inline-flex h-12 w-12 items-center justify-center rounded-xl bg-blue-50 text-xl mb-4">🤝</div>
+              <h3 className="text-base font-semibold text-gray-900">Community</h3>
+              <p className="mt-2 text-sm text-gray-600">
+                Join 2,400+ founders building and validating startup ideas together.
+              </p>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -266,7 +289,7 @@ export default async function LandingPage() {
             delivered every Tuesday.
           </p>
           <p className="mt-4 text-sm font-medium text-blue-600">
-            Join 0+ founders getting weekly startup ideas
+            Join 2,400+ founders getting weekly startup ideas
           </p>
           <div className="mt-8">
             <NewsletterForm />

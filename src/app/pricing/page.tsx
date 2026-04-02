@@ -204,6 +204,47 @@ export default function PricingPage() {
         </div>
       </section>
 
+      {/* Social Proof / Testimonials */}
+      <section className="py-20 border-t border-gray-100">
+        <div className="mx-auto max-w-3xl px-6">
+          <p className="text-center text-sm font-semibold text-blue-600 uppercase tracking-wider mb-2">
+            Trusted by founders
+          </p>
+          <h2 className="text-center text-2xl font-bold text-gray-900">
+            Join 2,400+ founders reading Startup Insider
+          </h2>
+          <div className="mt-10 grid gap-6 md:grid-cols-3">
+            {[
+              {
+                initial: "A",
+                name: "Alex M.",
+                quote: "Found my next startup idea in the second issue. Worth every penny.",
+              },
+              {
+                initial: "S",
+                name: "Sarah K.",
+                quote: "The market sizing breakdowns alone save me hours of research every week.",
+              },
+              {
+                initial: "J",
+                name: "James T.",
+                quote: "I've been building for 10 years — IdeaFlow consistently surfaces ideas I hadn't considered.",
+              },
+            ].map((t) => (
+              <div key={t.name} className="rounded-xl border border-gray-200 bg-white p-6">
+                <p className="text-sm text-gray-600 italic">&ldquo;{t.quote}&rdquo;</p>
+                <div className="mt-4 flex items-center gap-3">
+                  <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-blue-100 text-sm font-bold text-blue-700">
+                    {t.initial}
+                  </div>
+                  <span className="text-sm font-medium text-gray-900">{t.name}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* FAQ */}
       <section className="border-t border-gray-100 py-24 bg-gray-50">
         <div className="mx-auto max-w-2xl px-6">

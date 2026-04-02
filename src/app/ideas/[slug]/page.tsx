@@ -13,11 +13,48 @@ import { BookmarkButton } from "@/components/bookmark-button";
 import { SavedNavLink } from "@/components/saved-nav-link";
 import { ReadingProgress } from "@/components/reading-progress";
 import { TableOfContents } from "@/components/table-of-contents";
+import { StickyBanner } from "@/components/sticky-banner";
+import { ExitIntentModal } from "@/components/exit-intent-modal";
 
 function calcReadingTime(content: string): number {
   const words = content.trim().split(/\s+/).length;
   return Math.max(1, Math.round(words / 200));
 }
+
+/** Inject a <InlineCTA /> marker after every 3rd H2 heading in MDX content */
+function injectInlineCTAs(content: string): string {
+  let h2Count = 0;
+  return content
+    .split("\n")
+    .map((line) => {
+      if (/^## /.test(line)) {
+        h2Count++;
+        if (h2Count % 3 === 0) {
+          return line + "\n\n<InlineCTA />";
+        }
+      }
+      return line;
+    })
+    .join("\n");
+}
+
+function InlineCTA() {
+  return (
+    <div className="not-prose my-8 rounded-xl border border-blue-100 bg-blue-50 p-6 text-center">
+      <p className="text-sm font-medium text-blue-900">
+        Enjoying this? Get more startup ideas every week.
+      </p>
+      <Link
+        href="/newsletter"
+        className="mt-3 inline-block rounded-lg bg-blue-600 px-5 py-2 text-sm font-medium text-white hover:bg-blue-700 transition-colors"
+      >
+        Subscribe Free →
+      </Link>
+    </div>
+  );
+}
+
+const mdxComponents = { InlineCTA };
 
 interface TocItem {
   id: string;
@@ -153,9 +190,13 @@ export default async function ArticlePage({ params }: PageProps) {
       : {}),
   };
 
+  const contentWithCTAs = injectInlineCTAs(article.content);
+
   return (
     <div className="min-h-screen bg-white">
       <ReadingProgress />
+      <StickyBanner />
+      <ExitIntentModal />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }}
@@ -280,7 +321,7 @@ export default async function ArticlePage({ params }: PageProps) {
               prose-img:rounded-xl
               prose-table:border-collapse prose-th:border prose-th:border-gray-300 prose-th:bg-gray-50 prose-th:px-4 prose-th:py-2 prose-td:border prose-td:border-gray-200 prose-td:px-4 prose-td:py-2"
           >
-            <MDXRemote source={article.content} options={{ mdxOptions: { remarkPlugins: [remarkGfm], rehypePlugins: [rehypeSlug] } }} />
+            <MDXRemote source={contentWithCTAs} components={mdxComponents} options={{ mdxOptions: { remarkPlugins: [remarkGfm], rehypePlugins: [rehypeSlug] } }} />
           </div>
         ) : (
           <div className="mt-10 relative">
